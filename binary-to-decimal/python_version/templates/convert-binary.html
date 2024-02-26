@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BinTodecimal</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+
+    <link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAETT//9E0///RNP//0TT//9E0///RNP//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAETT//9E0///RNP//0TT//9E0/////////////9E0///AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABE0///RNP//0TT//9E0///RNP/////////////RNP//wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARNP//0TT//9E0///RNP//0TT//9E0///RNP//0TT//8AAAAAAAAAAAAAAAAAAAAAAAAAAJ9wOv+fcDr/n3A6/0TT/5hE0///RNP//0TT//9E0///RNP//0TT//9E0///RNP//0TT//9E0///AAAAAJ9wOv+fcDr/n3A6/59wOv+fcDqVRNP//0TT//9E0///RNP//0TT//9E0///RNP//0TT//9E0///RNP//0TT//+fcDr/n3A6/59wOv+fcDr/RNP/mETT//9E0///RNP//0TT//9E0///RNP//0TT//9E0///RNP//0TT//9E0///n3A6/59wOv+fcDr/n3A6/59wOpVE0/+YRNP/mETT/5hE0/+YRNP/mETT/5hE0///RNP//0TT//9E0///RNP//59wOv+fcDr/n3A6/59wOv+fcDr/n3A6lZ9wOpWfcDqVn3A6lZ9wOpWfcDqVn3A6lUTT//9E0///RNP//0TT//+fcDr/n3A6/59wOv+fcDr/n3A6/59wOv+fcDr/n3A6/59wOv+fcDr/n3A6/0TT/5hE0///RNP//0TT//9E0///n3A6/59wOv+fcDr/n3A6/59wOv+fcDr/n3A6/59wOv+fcDr/n3A6/59wOv+fcDqVRNP//0TT//9E0///RNP//wAAAACfcDr/n3A6/59wOv+fcDr/n3A6/59wOv+fcDr/n3A6/59wOv+fcDr/RNP/mETT//9E0///RNP//wAAAAAAAAAAAAAAAAAAAAAAAAAAn3A6/59wOv+fcDr/n3A6/59wOv+fcDr/n3A6/59wOv8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJ9wOv///////////59wOv+fcDr/n3A6/59wOv+fcDr/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACfcDr///////////+fcDr/n3A6/59wOv+fcDr/n3A6/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJ9wOv+fcDr/n3A6/59wOv+fcDr/n3A6/wAAAAAAAAAAAAAAAAAAAAAAAAAA+B8AAPAPAADwDwAA8A8AAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAA8A8AAPAPAADwDwAA+B8AAA==" rel="icon" type="image/x-icon">
+
+</head>
+<style>
+    #alert-container {
+        z-index: 1;
+    
+        .alert-msg {
+            background: lightyellow;
+            border-radius: 5px;
+            border: 1px solid yellow;
+            bottom: 35px;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
+            left: 25px;
+            padding: 15px;
+            position: absolute;
+            z-index: 99;
+            
+            &:before {
+                content: url("{{url_for('static', filename='icon/triangle-exclamation-solid.svg')}}");
+                font-size: 1.5em;
+                font-weight: 600;
+                margin-right: 10px;
+                vertical-align: sub; 
+            }
+        }
+    }
+</style>
+<body>
+    <div class="card">
+        <div class="card-title">Conversor Binário Decimal</h1></div>
+        <div class="card-body">
+            <div class="card-input">
+                <input type="text" class="input-style" id="binary-input">
+                <select class="select-style" id="select-convert1">
+                    <option value="binary">Binario</option>
+                    <option disabled value="octal">Octal</option>
+                    <option disabled value="hexa">Hexadecimal</option>
+                    <option disabled value="decimal">Decimal</option>
+                </select>
+            </div>
+            <div class="card-button">
+                <button class="button-converter" onclick="convertBinary('/convert-value')">Converter</button>    
+            </div>
+            <div class="card-input">
+                <input type="text" class="input-style" id="result">
+                <select class="select-style" id="select-convert2">
+                    <option value="decimal">Decimal</option>
+                    <option disabled value="octal">Octal</option>
+                    <option disabled value="hexa">Hexadecimal</option>
+                    <option disabled value="binary">Binario</option>
+                </select>                
+            </div>
+        </div>
+    </div>
+    <div class="copyright-text">
+        Copyright © 2024 | Todos os direitos reservados | Marcos Vinicius Dantas <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#838385" d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6zM286.2 404c11.1 0 20.1 9.1 20.1 20.3 0 11.3-9 20.4-20.1 20.4-11 0-20.1-9.2-20.1-20.4 .1-11.3 9.1-20.3 20.1-20.3zM167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8 .1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4zm-6.7-142.6c-11.1 0-20.1-9.1-20.1-20.3 .1-11.3 9-20.4 20.1-20.4 11 0 20.1 9.2 20.1 20.4s-9 20.3-20.1 20.3z"/></svg>
+    </div>
+
+    <div id="alert-container"></div>
+
+</body>
+<script>
+    var input = document.getElementById("binary-input")
+    var select1 = document.getElementById("select-convert1")
+    var select2 = document.getElementById("select-convert2")
+    var lastselected1
+    var lastselected2
+    
+    input.addEventListener('keydown', function(e) {
+        if (e.key == '1' || e.key == '0' || e.key == 'Backspace' 
+            || e.key == ' ' || e.key == 'Control' || e.key == 'Shift' || e.key == 'Enter') {
+        }else {
+            alertHandler(e.key)
+            e.preventDefault()
+        }
+    })
+    input.addEventListener('keyup', function(e){
+        if(e.key == "Enter"){
+            convertBinary('/convert-value')
+        }
+    })
+
+    select1.addEventListener('change', function(e){
+        if (select1.value == select2.value & !lastselected1){
+            select1.value = 'binary'
+        }else if(select1.value == select2.value) {
+            select1.value = lastselected1
+        }else{
+            lastselected1 = select1.value
+        }
+
+    })
+    select2.addEventListener('change', function(e){
+        if (select2.value == select1.value & !lastselected2){
+            select2.value = 'decimal'
+        }else if(select2.value == select1.value) {
+            select2.value = lastselected2
+        }else{
+            lastselected2 = select2.value
+        }
+
+    })
+    
+    function convertNumber(value, index_v){
+        return value * (2**index_v)
+    }
+
+    function convertBinary(url) {
+        formData = {
+            value: input.value,
+            value_in: select1.value,
+            convert_to: select2.value,
+        }
+        // algoritm to convert binarie number to decimal
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        }).then(response => response.text())
+        .then(data =>{
+            console.log(data)
+            document.getElementById('result').value = data
+        }) 
+    }
+
+    let timeoutId;
+    function alertHandler(key) {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        let alerts = document.getElementById("alert-container");
+        
+        // Create alert box
+        let alertBox = document.createElement("div");
+        alertBox.classList.add("alert-msg", "slide-in");
+
+        // Add message to alert box
+        let alertMsg = document.createTextNode("Foi digitado um valor não binario! "+key);
+        alertBox.appendChild(alertMsg);
+
+        // Add alert box to parent
+        alerts.insertBefore(alertBox, alerts.childNodes[0]);
+
+        // Remove last alert box
+        if (alerts.childElementCount > 1) {
+            alerts.removeChild(alerts.lastChild);
+        }
+        timeoutId =  setTimeout(function() {
+            alerts.lastChild.classList.add("slide-out")
+            setTimeout(
+                function(){alerts.removeChild(alerts.lastChild)}, 300)
+        }, 3000);
+    }
+
+</script>
+</html>

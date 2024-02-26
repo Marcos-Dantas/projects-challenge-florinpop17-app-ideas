@@ -13,29 +13,6 @@ body {
     background-color: var(--primary-color);
 }
 
-#alert-container {
-    z-index: 1;
-
-    .alert-msg {
-        background: lightyellow;
-        border-radius: 5px;
-        border: 1px solid yellow;
-        bottom: 35px;
-        box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
-        left: 25px;
-        padding: 15px;
-        position: absolute;
-        z-index: 99;
-        
-        &:before {
-            content: url(../html_css_javascript/icon/triangle-exclamation-solid.svg);
-            font-size: 1.5em;
-            font-weight: 600;
-            margin-right: 10px;
-            vertical-align: sub;
-        }
-    }
-}
 .slide-in {
     animation-name: slideIn;
     animation-duration: 0.8s;
@@ -138,6 +115,9 @@ to {
 .copyright-text {
     position: absolute;
     bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
     color: #838384;
 }
 
