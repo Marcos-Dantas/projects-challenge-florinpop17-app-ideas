@@ -4,9 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BinTodecimal</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="./favicon/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAzMzMA////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAABAAEAEBAAAAEAAQAQEAAAAQABABAQAAABAAEAEBAAAAERAREQERAAAQEBABAQEAABAQEAEBAQAAEBAQAQEBAAAREBABAREAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" rel="icon" type="image/x-icon">
 </head>
+<style>
+    #alert-container {
+        z-index: 1;
+    
+        .alert-msg {
+            background: lightyellow;
+            border-radius: 5px;
+            border: 1px solid yellow;
+            bottom: 35px;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
+            left: 25px;
+            padding: 15px;
+            position: absolute;
+            z-index: 99;
+            
+            &:before {
+                content: url(./icon/triangle-exclamation-solid.svg);
+                font-size: 1.5em;
+                font-weight: 600;
+                margin-right: 10px;
+                vertical-align: sub; 
+            }
+        }
+    }
+</style>
 <body>
     <div class="card">
         <div class="card-title">Conversor Binário Decimal</h1></div>
@@ -15,9 +40,9 @@
                 <input type="text" class="input-style" id="binary-input">
                 <select class="select-style" id="select-convert1">
                     <option value="binary">Binario</option>
-                    <option disabled value="octal">Octal</option>
+                    <!-- <option disabled value="octal">Octal</option>
                     <option disabled value="hexa">Hexadecimal</option>
-                    <option disabled value="decimal">Decimal</option>
+                    <option disabled value="decimal">Decimal</option> -->
                 </select>
             </div>
             <div class="card-button">
@@ -27,18 +52,21 @@
                 <input type="text" class="input-style" id="result">
                 <select class="select-style" id="select-convert2">
                     <option value="decimal">Decimal</option>
-                    <option disabled value="octal">Octal</option>
+                    <!-- <option disabled value="octal">Octal</option>
                     <option disabled value="hexa">Hexadecimal</option>
-                    <option disabled value="binary">Binario</option>
+                    <option disabled value="binary">Binario</option> -->
                 </select>                
             </div>
         </div>
     </div>
     <div class="copyright-text">
-        Copyright © 2024 | Todos os direitos reservados | Marcos Vinicius Dantas
+        Copyright © 2024 | Todos os direitos reservados | Marcos Vinicius Dantas <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 0 640 512"><path fill="#838385" d="M320 104.5c171.4 0 303.2 72.2 303.2 151.5S491.3 407.5 320 407.5c-171.4 0-303.2-72.2-303.2-151.5S148.7 104.5 320 104.5m0-16.8C143.3 87.7 0 163 0 256s143.3 168.3 320 168.3S640 349 640 256 496.7 87.7 320 87.7zM218.2 242.5c-7.9 40.5-35.8 36.3-70.1 36.3l13.7-70.6c38 0 63.8-4.1 56.4 34.3zM97.4 350.3h36.7l8.7-44.8c41.1 0 66.6 3 90.2-19.1 26.1-24 32.9-66.7 14.3-88.1-9.7-11.2-25.3-16.7-46.5-16.7h-70.7L97.4 350.3zm185.7-213.6h36.5l-8.7 44.8c31.5 0 60.7-2.3 74.8 10.7 14.8 13.6 7.7 31-8.3 113.1h-37c15.4-79.4 18.3-86 12.7-92-5.4-5.8-17.7-4.6-47.4-4.6l-18.8 96.6h-36.5l32.7-168.6zM505 242.5c-8 41.1-36.7 36.3-70.1 36.3l13.7-70.6c38.2 0 63.8-4.1 56.4 34.3zM384.2 350.3H421l8.7-44.8c43.2 0 67.1 2.5 90.2-19.1 26.1-24 32.9-66.7 14.3-88.1-9.7-11.2-25.3-16.7-46.5-16.7H417l-32.8 168.7z"/></svg>
+       
     </div>
 
-    <div id="alert-container"></div>
+    <div id="alert-container">
+    </div>
+
 
 </body>
 <script>
@@ -88,15 +116,30 @@
     }
 
     function convertBinary() {
-        // algoritm to convert binarie number to decimal
-        let index = 0 
-        let result = 0
-        for(i=input.value.length-1; i >= 0 ; i--) {
-            result = result + convertNumber(input.value[i], index)
-            index++
-        }
-        document.getElementById('result').value = result
+        let url = 'convert-binary-decimal.php'
+        // para você dar post nos dados com fetch, o body so aceita,
+        //instancias de FormData, URLSearchParams, Blob, BufferSource ou uma string
+        // você pode enviar instancia de FOrmdata() ou converter objeto em JSON
+      
+        // algoritm to convert binarie number to decimal php        
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                value: input.value,
+                value_in: select1.value,
+                convert_in: select2.value
+            })
+        }).then(response => response.text())
+        .then(data => {
+            console.log(data)
+            document.getElementById('result').value = data
+        })
+
     }
+    
 
     let timeoutId;
     function alertHandler(key) {

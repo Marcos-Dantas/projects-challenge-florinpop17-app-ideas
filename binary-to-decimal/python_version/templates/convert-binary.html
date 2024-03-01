@@ -42,9 +42,9 @@
                 <input type="text" class="input-style" id="binary-input">
                 <select class="select-style" id="select-convert1">
                     <option value="binary">Binario</option>
-                    <option disabled value="octal">Octal</option>
+                    {% comment %} <option disabled value="octal">Octal</option>
                     <option disabled value="hexa">Hexadecimal</option>
-                    <option disabled value="decimal">Decimal</option>
+                    <option disabled value="decimal">Decimal</option> {% endcomment %}
                 </select>
             </div>
             <div class="card-button">
@@ -54,9 +54,9 @@
                 <input type="text" class="input-style" id="result">
                 <select class="select-style" id="select-convert2">
                     <option value="decimal">Decimal</option>
-                    <option disabled value="octal">Octal</option>
+                    {% comment %} <option disabled value="octal">Octal</option>
                     <option disabled value="hexa">Hexadecimal</option>
-                    <option disabled value="binary">Binario</option>
+                    <option disabled value="binary">Binario</option> {% endcomment %}
                 </select>                
             </div>
         </div>
@@ -120,7 +120,7 @@
             value_in: select1.value,
             convert_to: select2.value,
         }
-        // algoritm to convert binarie number to decimal
+        // algoritm to convert binarie number to decimal python
         fetch(url, {
             method: 'POST',
             headers: {
