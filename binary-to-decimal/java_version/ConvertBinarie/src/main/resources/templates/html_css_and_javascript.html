@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BinTodecimal</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <link href="data:image/x-icon;base64,AAABAAEAEBAAAAAAAABoBQAAFgAAACgAAAAQAAAAIAAAAAEACAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAADy8vQA/f3+ALFyEwCfk34A8Pr/AMzMzAD39/cA/vv8AP//+QBMRr4A6+/tACgo6wDq4eMA//3/AOPf4QDS0t0A+/z6AJ+gnQA1K+sArnMSALmytAD/+/0A///6APH5+wD+/v0A//79AIOLoACwq58AycvyAKdtCwD+/PsAeH+qAPL6+QD/+/4A19z8APz+/gCgcSoA/f7+AP7+/gD//v4A9OO+APz8/ADv9v0Am3M2ALu1vgD///wAq5mJAP3+/wCtdCIA/v7/AP/+/wDHy8IA+vr6ANvi5AD38vgArKfvAEBAugBQSrYAeXueAKRvGAC1pIMA9vj4AKNzDQD+/P0A+fj4ALdvBwD59/sA1tbVADcs4wD5/vgAqYpqAL/IzACscRMAr45nAFlcpQCwawsAsLKwAPr4+QD///4A9vr8AKNvIgD7/vkAMi/cAK+QWgD//vkA8vLyAPn+8QC6cgAA3t/eAP38/wCrsZsA/vz/APz//wDv9eoA////AP/89wCgnZIA2trUAKKRegCmcQ0ArW0YAP39/QCvdRIA+v31AC8w4wCppKgAvnEEAPv8+AD1+v4A+//4AFhKsQDCqo4A+/jzALyZYwD+/vsAs3EFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXl5eXhkMMxRMLEMACF5eXl4yKlpGKzs+JEkRNUhHXl5eXnFpcCZNClVyJi1TFV5eXl5UWR5XHWNzQWVcJy9eXl5eXl4xDy5iYAUGWCYyXl5eXl5eaw4EFmxfPxACNl5eXl5eKGpmMBNLUBtlTwNeXl5eXiEHb2VCIGEYPGRRXl5eXl5eXl49XSIJXl5eXl5eXl5eXl5lUg0LVl5eXl5eXl5eXl5eKURnaCVeXl5eXl5eXl5eXiY4OhwfRU5eXl5eXl5eXl5ebTdKQDk0Xl5eXl5eXl5eXl4BFxojJ15eXl5eXl5eXl5eXlsSZV5eXl5eXl5eXl5eXl5ebl5eXl5eXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=" rel="icon" type="image/x-icon">
+</head>
+<style>
+    #alert-container {
+        z-index: 1;
+    
+        .alert-msg {
+            background: lightyellow;
+            border-radius: 5px;
+            border: 1px solid yellow;
+            bottom: 35px;
+            box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
+            left: 25px;
+            padding: 15px;
+            position: absolute;
+            z-index: 99;
+            
+            &:before {
+                content: url(./icon/triangle-exclamation-solid.svg);
+                font-size: 1.5em;
+                font-weight: 600;
+                margin-right: 10px;
+                vertical-align: sub; 
+            }
+        }
+    }
+</style>
+<body>
+    <div class="card">
+        <div class="card-title">Conversor Binário Decimal</h1></div>
+        <div class="card-body">
+            <div class="card-input">
+                <input type="text" class="input-style" id="binary-input">
+                <select class="select-style" id="select-convert1">
+                    <option value="binary">Binario</option>
+                    <!-- <option disabled value="octal">Octal</option>
+                    <option disabled value="hexa">Hexadecimal</option>
+                    <option disabled value="decimal">Decimal</option> -->
+                </select>
+            </div>
+            <div class="card-button">
+                <button class="button-converter" onclick="convertBinary()">Converter</button>    
+            </div>
+            <div class="card-input">
+                <input type="text" class="input-style" id="result">
+                <select class="select-style" id="select-convert2">
+                    <option value="decimal">Decimal</option>
+                    <!-- <option disabled value="octal">Octal</option>
+                    <option disabled value="hexa">Hexadecimal</option>
+                    <option disabled value="binary">Binario</option> -->
+                </select>                
+            </div>
+        </div>
+    </div>
+    <div class="copyright-text">
+        Copyright © 2024 | Todos os direitos reservados | Marcos Vinicius Dantas <svg xmlns="http://www.w3.org/2000/svg" height="25" viewBox="0 0 384 512"><path fill="#838385" d="M277.7 312.9c9.8-6.7 23.4-12.5 23.4-12.5s-38.7 7-77.2 10.2c-47.1 3.9-97.7 4.7-123.1 1.3-60.1-8 33-30.1 33-30.1s-36.1-2.4-80.6 19c-52.5 25.4 130 37 224.5 12.1zm-85.4-32.1c-19-42.7-83.1-80.2 0-145.8C296 53.2 242.8 0 242.8 0c21.5 84.5-75.6 110.1-110.7 162.6-23.9 35.9 11.7 74.4 60.2 118.2zm114.6-176.2c.1 0-175.2 43.8-91.5 140.2 24.7 28.4-6.5 54-6.5 54s62.7-32.4 33.9-72.9c-26.9-37.8-47.5-56.6 64.1-121.3zm-6.1 270.5a12.2 12.2 0 0 1 -2 2.6c128.3-33.7 81.1-118.9 19.8-97.3a17.3 17.3 0 0 0 -8.2 6.3 70.5 70.5 0 0 1 11-3c31-6.5 75.5 41.5-20.6 91.4zM348 437.4s14.5 11.9-15.9 21.2c-57.9 17.5-240.8 22.8-291.6 .7-18.3-7.9 16-19 26.8-21.3 11.2-2.4 17.7-2 17.7-2-20.3-14.3-131.3 28.1-56.4 40.2C232.8 509.4 401 461.3 348 437.4zM124.4 396c-78.7 22 47.9 67.4 148.1 24.5a185.9 185.9 0 0 1 -28.2-13.8c-44.7 8.5-65.4 9.1-106 4.5-33.5-3.8-13.9-15.2-13.9-15.2zm179.8 97.2c-78.7 14.8-175.8 13.1-233.3 3.6 0-.1 11.8 9.7 72.4 13.6 92.2 5.9 233.8-3.3 237.1-46.9 0 0-6.4 16.5-76.2 29.7zM260.6 353c-59.2 11.4-93.5 11.1-136.8 6.6-33.5-3.5-11.6-19.7-11.6-19.7-86.8 28.8 48.2 61.4 169.5 25.9a60.4 60.4 0 0 1 -21.1-12.8z"/></svg>
+    </div>
+
+    <div id="alert-container">
+    </div>
+
+
+</body>
+<script>
+    var input = document.getElementById("binary-input")
+    var select1 = document.getElementById("select-convert1")
+    var select2 = document.getElementById("select-convert2")
+    var lastselected1
+    var lastselected2
+    
+    input.addEventListener('keydown', function(e) {
+        if (e.key == '1' || e.key == '0' || e.key == 'Backspace' 
+            || e.key == ' ' || e.key == 'Control' || e.key == 'Shift' || e.key == 'Enter') {
+        }else {
+            alertHandler(e.key)
+            e.preventDefault()
+        }
+    })
+    input.addEventListener('keyup', function(e){
+        if(e.key == "Enter"){
+            convertBinary()
+        }
+    })
+
+    select1.addEventListener('change', function(e){
+        if (select1.value == select2.value & !lastselected1){
+            select1.value = 'binary'
+        }else if(select1.value == select2.value) {
+            select1.value = lastselected1
+        }else{
+            lastselected1 = select1.value
+        }
+
+    })
+    select2.addEventListener('change', function(e){
+        if (select2.value == select1.value & !lastselected2){
+            select2.value = 'decimal'
+        }else if(select2.value == select1.value) {
+            select2.value = lastselected2
+        }else{
+            lastselected2 = select2.value
+        }
+
+    })
+    
+    function convertBinary() {
+      
+        // algoritm to convert binarie number to decimal java        
+        fetch('/convert-value', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                value: input.value,
+                valueIn: select1.value,
+                convertIn: select2.value
+            })
+        }).then(response => response.text())
+        .then(data => {
+            document.getElementById('result').value = data
+        })
+
+    }
+    
+
+    let timeoutId;
+    function alertHandler(key) {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        let alerts = document.getElementById("alert-container");
+        
+        // Create alert box
+        let alertBox = document.createElement("div");
+        alertBox.classList.add("alert-msg", "slide-in");
+
+        // Add message to alert box
+        let alertMsg = document.createTextNode("Foi digitado um valor não binario! "+key);
+        alertBox.appendChild(alertMsg);
+
+        // Add alert box to parent
+        alerts.insertBefore(alertBox, alerts.childNodes[0]);
+
+        console.log(alerts.childNodes)
+        console.log(alerts.childElementCount)
+        console.log(alerts.lastChild)
+
+        // Remove last alert box
+        if (alerts.childElementCount > 1) {
+            alerts.removeChild(alerts.lastChild);
+        }
+        timeoutId =  setTimeout(function() {
+            alerts.lastChild.classList.add("slide-out")
+            setTimeout(
+                function(){alerts.removeChild(alerts.lastChild)}, 300)
+        }, 3000);
+    }
+
+</script>
+</html>
