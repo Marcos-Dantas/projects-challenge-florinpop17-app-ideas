@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BinTodecimal</title>
+    <link rel="stylesheet" href="~/css/style.css">
+    <link href="data:image/x-icon;base64,AAABAAEAEBACAAAAAACwAAAAFgAAACgAAAAQAAAAIAAAAAEAAQAAAAAAQAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA/4QAAAAAAAAAAAAAAAAAAPwkAACEJAAAgP8AAIAkAACAJAAAgCQAAIAkAACA/wAAhCQAAPwkAAAAAAAAAAAAAAAAAAD//wAA//8AAP//AAAD2wAAe9sAAH8AAAB/2wAAf9sAAH/bAAB/2wAAfwAAAHvbAAAD2wAA//8AAP//AAD//wAA" rel="icon" type="image/x-icon">
+</head>
+<body>
+    <div class="card">
+        <div class="card-title">Conversor Binário Decimal</h1></div>
+        <div class="card-body">
+            <div class="card-input">
+                <input type="text" class="input-style" id="binary-input">
+                <select class="select-style" id="select-convert1">
+                    <option value="binary">Binario</option>
+                </select>
+            </div>
+            <div class="card-button">
+                <button class="button-converter" onclick="convertBinary()">Converter</button>    
+            </div>
+            <div class="card-input">
+                <input type="text" class="input-style" id="result">
+                <select class="select-style" id="select-convert2">
+                    <option value="decimal">Decimal</option>
+                </select>                
+            </div>
+        </div>
+    </div>
+    <div class="copyright-text">
+        Copyright © 2024 | Todos os direitos reservados | Marcos Vinicius Dantas <img height='30' src="~/icon/c-sharp.png" alt="">
+    </div>
+
+    <div id="alert-container"></div>
+
+</body>
+<script>
+    var input = document.getElementById("binary-input")
+    var select1 = document.getElementById("select-convert1")
+    var select2 = document.getElementById("select-convert2")
+    var lastselected1
+    var lastselected2
+    
+    input.addEventListener('keydown', function(e) {
+        if (e.key == '1' || e.key == '0' || e.key == 'Backspace' 
+            || e.key == ' ' || e.key == 'Control' || e.key == 'Shift' || e.key == 'Enter') {
+        }else {
+            alertHandler(e.key)
+            e.preventDefault()
+        }
+    })
+    input.addEventListener('keyup', function(e){
+        if(e.key == "Enter"){
+            convertBinary()
+        }
+    })
+
+    select1.addEventListener('change', function(e){
+        if (select1.value == select2.value & !lastselected1){
+            select1.value = 'binary'
+        }else if(select1.value == select2.value) {
+            select1.value = lastselected1
+        }else{
+            lastselected1 = select1.value
+        }
+
+    })
+    select2.addEventListener('change', function(e){
+        if (select2.value == select1.value & !lastselected2){
+            select2.value = 'decimal'
+        }else if(select2.value == select1.value) {
+            select2.value = lastselected2
+        }else{
+            lastselected2 = select2.value
+        }
+
+    })
+    
+    function convertBinary() {
+        // algoritm to convert binarie number to decimal
+        let url = '/convert-number/'
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                value: input.value,
+                valueIn: select1.value,
+                convertIn: select2.value
+            })
+        }).then(response => response.json())
+        .then(data => {
+            document.getElementById('result').value = data
+        })
+    }
+
+    let timeoutId;
+    function alertHandler(key) {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        let alerts = document.getElementById("alert-container");
+        
+        // Create alert box
+        let alertBox = document.createElement("div");
+        alertBox.classList.add("alert-msg", "slide-in");
+
+        // Add message to alert box
+        let alertMsg = document.createTextNode("Foi digitado um valor não binario! "+key);
+        alertBox.appendChild(alertMsg);
+
+        // Add alert box to parent
+        alerts.insertBefore(alertBox, alerts.childNodes[0]);
+
+        // Remove last alert box
+        if (alerts.childElementCount > 1) {
+            alerts.removeChild(alerts.lastChild);
+        }
+        timeoutId =  setTimeout(function() {
+            alerts.lastChild.classList.add("slide-out")
+            setTimeout(
+                function(){alerts.removeChild(alerts.lastChild)}, 300)
+        }, 3000);
+    }
+
+</script>
+</html>

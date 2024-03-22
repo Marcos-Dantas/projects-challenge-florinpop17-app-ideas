@@ -1,0 +1,146 @@
+:root {
+    --primary-color: #1a1a1e;
+    --secondary-color: #262629;
+    --border-color: #333437;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--primary-color);
+}
+
+#alert-container {
+    z-index: 1;
+
+    .alert-msg {
+        background: lightyellow;
+        border-radius: 5px;
+        border: 1px solid yellow;
+        bottom: 35px;
+        box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
+        left: 25px;
+        padding: 15px;
+        position: absolute;
+        z-index: 99;
+        
+        &:before {
+            content: url(~/icon/triangle-exclamation-solid.svg);
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-right: 10px;
+            vertical-align: sub;
+        }
+    }
+}
+.slide-in {
+    animation-name: slideIn;
+    animation-duration: 0.8s;
+}
+
+@keyframes slideIn {
+from {
+    transform: translateX(-400px);
+}
+
+to {
+    transform: translateX(0);
+}
+}
+
+.slide-out {
+    animation-name: slideOut;
+    animation-duration: 0.8s;
+}
+
+@keyframes slideOut {
+from {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+to {
+    transform: translateY(80px);
+    opacity: 0;
+}
+}
+.card {
+    width: 35%;
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+}
+.card-title {
+    font-size: 15px;
+    border-radius: 0px;
+    font-weight: bolder;
+    color: #838385;
+    font-family: sans-serif;
+    width: auto;
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.card-body {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: auto;
+    gap: 5px;
+    padding: 10px;
+}
+.input-style {
+    width: 93%;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #1e1e21;
+    border: 1px solid var(--border-color);
+    color: white;
+}
+.card-input {
+    position: relative;
+}
+.select-style {
+    position: absolute;
+    top: 9px;
+    right: 8px;
+    padding: 5px 10px;
+    background-color: #0f0f10;
+    border-radius: 8px;
+    color: #838385;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+
+}
+.select-style:focus-visible {
+    outline: none;
+}
+.card-button {
+    display: flex;
+    justify-content: center;
+}
+.button-converter {
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    background-color: #838384;
+    cursor: pointer;
+}
+.select-style:hover {
+    filter: brightness(0.8)
+}
+.button-converter:hover {
+    filter: brightness(0.8)
+}
+.copyright-text {
+    position: absolute;
+    bottom: 10px;
+    color: #838384;
+}
+
+.select-style option:disabled {
+    color: red;
+}

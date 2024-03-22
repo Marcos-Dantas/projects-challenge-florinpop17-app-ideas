@@ -1,0 +1,27 @@
+# Ignorar arquivos de compilação e arquivos temporários
+bin/
+obj/
+
+# Ignorar arquivos de configuração do Visual Studio
+.vs/
+*.suo
+*.user
+*.sln.docstates
+
+# Ignorar arquivos de configuração de ferramentas
+*.bak
+*.bak.*
+*.vscode/
+*.dotSettings
+.vsconfig
+.idea/
+*.dbmdl
+
+# Ignorar arquivos de log e cache
+*.log
+*.cache
+
+# Ignorar arquivos de dependência do NuGet
+*.nuget.props
+*.nuget.targets
+*.lock.json
